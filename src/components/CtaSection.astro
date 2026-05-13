@@ -1,0 +1,190 @@
+---
+const installCmd = `./scripts/install_app.sh --llm='bge-m3:latest' --vector_size=1024`;
+---
+
+<section class="cta-section" aria-labelledby="cta-title">
+  <div class="cta-bg" aria-hidden="true"></div>
+  <div class="cta-inner">
+    <div class="cta-content animate-fade-up">
+      <h2 id="cta-title" class="cta-title">Start Exploring Hive Content</h2>
+      <p class="cta-subtitle">Open source, self-hostable, and ready to deploy. Dive into semantic search on the Hive blockchain.</p>
+
+      <div class="cta-buttons">
+        <a
+          href="https://gitlab.syncad.com/hive/hivesense"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary"
+          aria-label="View on GitLab (opens in new tab)"
+        >
+          <svg class="size-4" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 30.4L21.3 14.1H10.7L16 30.4Z"/><path d="M16 30.4L10.7 14.1H2.4L16 30.4Z" opacity="0.7"/><path d="M2.4 14.1L0.5 20.1C0.3 20.7 0.5 21.4 1 21.8L16 30.4L2.4 14.1Z" opacity="0.5"/><path d="M2.4 14.1H10.7L7.4 3.9C7.2 3.3 6.4 3.3 6.2 3.9L2.4 14.1Z"/><path d="M16 30.4L21.3 14.1H29.6L16 30.4Z" opacity="0.7"/><path d="M29.6 14.1L31.5 20.1C31.7 20.7 31.5 21.4 31 21.8L16 30.4L29.6 14.1Z" opacity="0.5"/><path d="M29.6 14.1H21.3L24.6 3.9C24.8 3.3 25.6 3.3 25.8 3.9L29.6 14.1Z"/></svg>
+          View on GitLab
+        </a>
+        <a
+          href="https://api.hive.blog/hivesense-swagger"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-secondary"
+          aria-label="API Documentation (opens in new tab)"
+        >
+          API Documentation
+          <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10" /></svg>
+        </a>
+      </div>
+
+      <div class="cta-install animate-fade-up" style="transition-delay: 100ms;">
+        <span class="cta-install-label">Quick install:</span>
+        <div class="cta-code" role="region" aria-label="Install command" tabindex="0">
+          <pre><code>{installCmd}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    position: relative;
+    padding: 6rem 1rem;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .cta-section { padding: 8rem 1.5rem; }
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, var(--color-accent-primary-dim) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 50rem;
+    margin: 0 auto;
+  }
+
+  .cta-content {
+    text-align: center;
+  }
+
+  .cta-title {
+    font-size: clamp(2rem, 3vw + 0.5rem, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+  }
+
+  .cta-subtitle {
+    font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.25rem);
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    max-width: 37.5rem;
+    margin: 0 auto 2rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-accent-primary);
+    color: var(--color-bg-base);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border-radius: var(--radius-full);
+    border: none;
+    text-decoration: none;
+    box-shadow: var(--shadow-button);
+    transition: filter var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 20px var(--color-accent-primary-mid);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    color: var(--color-text-primary);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-surface-2);
+    border-color: var(--color-border-hover);
+  }
+
+  .cta-install {
+    margin-top: 2.5rem;
+  }
+
+  .cta-install-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-code {
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .cta-code pre {
+    padding: 1rem 1.25rem;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--color-accent-primary);
+    white-space: pre;
+  }
+
+  .cta-code code {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  @media (max-width: 639px) {
+    .cta-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

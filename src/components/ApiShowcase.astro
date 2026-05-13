@@ -1,0 +1,201 @@
+---
+const endpoints = [
+  {
+    method: 'GET',
+    path: '/posts/search',
+    title: 'Text Search',
+    description: 'Search posts by semantic meaning. Returns ranked results with similarity scores.',
+    curl: `curl "https://api.hive.blog/hivesense-api/posts/search?q=astronauts+on+moon&limit=5"`,
+  },
+  {
+    method: 'GET',
+    path: '/posts/{author}/{permlink}/similar',
+    title: 'Similar Posts',
+    description: 'Find posts similar to a given post. Uses vector cosine similarity with HNSW index.',
+    curl: `curl "https://api.hive.blog/hivesense-api/posts/gtg/hive-technical-vision/similar?limit=5"`,
+  },
+  {
+    method: 'GET',
+    path: '/authors/search',
+    title: 'Expert Discovery',
+    description: 'Find authors who write about a specific topic. Ranked by thematic specialization.',
+    curl: `curl "https://api.hive.blog/hivesense-api/authors/search?topic=photography&limit=5"`,
+  },
+];
+---
+
+<section id="api" class="api-section" aria-labelledby="api-title">
+  <div class="api-inner">
+    <div class="section-header animate-fade-up">
+      <span class="overline">API</span>
+      <h2 id="api-title" class="section-title">Three Endpoints. Infinite Discovery.</h2>
+      <p class="section-subtitle">RESTful API powered by PostgREST. No auth required.</p>
+    </div>
+
+    <div class="api-cards">
+      {endpoints.map((ep, i) => (
+        <div class="api-card animate-fade-up" style={`transition-delay: ${i * 80}ms;`}>
+          <div class="api-card-header">
+            <span class={`api-method api-method--${ep.method.toLowerCase()}`}>{ep.method}</span>
+            <span class="api-path">{ep.path}</span>
+          </div>
+          <div class="api-card-body">
+            <h3 class="api-card-title">{ep.title}</h3>
+            <p class="api-card-desc">{ep.description}</p>
+            <div class="code-block" role="region" aria-label={`${ep.title} curl example`} tabindex="0">
+              <pre><code>{ep.curl}</code></pre>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .api-section {
+    padding: 4rem 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .api-section { padding: 6rem 1.5rem; }
+  }
+
+  .api-inner {
+    max-width: 50rem;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 37.5rem;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 768px) {
+    .section-header { margin-bottom: 4rem; }
+  }
+
+  .overline {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-primary);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 3vw + 0.5rem, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+  }
+
+  .section-subtitle {
+    font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.25rem);
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .api-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .api-card {
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--transition-fast);
+  }
+
+  .api-card:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .api-card-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .api-method {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+
+  .api-method--get {
+    color: var(--color-accent-secondary);
+    background: var(--color-accent-secondary-dim);
+  }
+
+  .api-method--post {
+    color: var(--color-accent-primary);
+    background: var(--color-accent-primary-dim);
+  }
+
+  .api-path {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  .api-card-body {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .api-card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .api-card-desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .code-block {
+    background: var(--color-bg-base);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+  }
+
+  .code-block pre {
+    padding: 1rem 1.25rem;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    white-space: pre;
+  }
+
+  .code-block code {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
+</style>

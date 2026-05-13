@@ -1,0 +1,175 @@
+---
+const technologies = [
+  {
+    name: 'PostgreSQL + pgvector',
+    category: 'Database',
+    description: 'Vector storage with HNSW indexing',
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.657 3.582 3 8 3s8-1.343 8-3V6"/><path d="M4 12v6c0 1.657 3.582 3 8 3s8-1.343 8-3v-6"/></svg>`,
+  },
+  {
+    name: 'Ollama',
+    category: 'ML Engine',
+    description: 'Local embedding generation',
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7v2a3 3 0 0 0 0 6v1a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4v-1a3 3 0 0 0 0-6V9a7 7 0 0 0-7-7z"/><circle cx="9" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1" fill="currentColor" stroke="none"/></svg>`,
+  },
+  {
+    name: 'HAF',
+    category: 'Blockchain',
+    description: 'Hive Application Framework',
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+  },
+  {
+    name: 'PostgREST',
+    category: 'API',
+    description: 'Auto-generated RESTful API',
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="1.5" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="10" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg>`,
+  },
+  {
+    name: 'Docker',
+    category: 'Infrastructure',
+    description: 'Containerized deployment',
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="10" width="20" height="10" rx="2"/><rect x="5" y="6" width="4" height="4"/><rect x="10" y="6" width="4" height="4"/><rect x="10" y="2" width="4" height="4"/><path d="M15 8h4a2 2 0 0 1 2 2"/></svg>`,
+  },
+  {
+    name: 'PL/pgSQL',
+    category: 'Language',
+    description: 'Pure SQL application logic',
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  },
+];
+---
+
+<section id="tech-stack" class="tech-section" aria-labelledby="tech-title">
+  <div class="tech-inner">
+    <div class="section-header animate-fade-up">
+      <span class="overline">Tech Stack</span>
+      <h2 id="tech-title" class="section-title">Battle-Tested Infrastructure</h2>
+    </div>
+
+    <div class="tech-grid">
+      {technologies.map((tech, i) => (
+        <div class="tech-card animate-fade-up" style={`transition-delay: ${i * 60}ms;`}>
+          <div class="tech-icon" aria-hidden="true" set:html={tech.icon} />
+          <div class="tech-info">
+            <h3 class="tech-name">{tech.name}</h3>
+            <span class="tech-category">{tech.category}</span>
+            <p class="tech-desc">{tech.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .tech-section {
+    padding: 4rem 1rem;
+    background: var(--color-surface-1);
+  }
+
+  @media (min-width: 768px) {
+    .tech-section { padding: 6rem 1.5rem; }
+  }
+
+  .tech-inner {
+    max-width: 75rem;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 37.5rem;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 768px) {
+    .section-header { margin-bottom: 4rem; }
+  }
+
+  .overline {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-primary);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 3vw + 0.5rem, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--color-text-primary);
+  }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .tech-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1024px) {
+    .tech-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .tech-card {
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: border-color var(--transition-fast);
+  }
+
+  .tech-card:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .tech-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    color: var(--color-accent-primary);
+    background: var(--color-accent-primary-dim);
+    border-radius: var(--radius-sm);
+  }
+
+  .tech-info {
+    min-width: 0;
+  }
+
+  .tech-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.3;
+  }
+
+  .tech-category {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+    margin-top: 0.125rem;
+  }
+
+  .tech-desc {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    margin-top: 0.375rem;
+  }
+</style>
