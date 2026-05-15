@@ -53,6 +53,13 @@ html {
   scroll-margin-top: 5rem;
 }
 
+main > section:not(.trust-bar) {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 :focus-visible {
   outline: 2px solid var(--color-accent-primary);
   outline-offset: 2px;
