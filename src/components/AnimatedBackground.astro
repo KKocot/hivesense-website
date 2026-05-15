@@ -1,0 +1,301 @@
+<div id="animated-bg" aria-hidden="true">
+  <div class="hex-grid"></div>
+  <canvas id="network-canvas"></canvas>
+</div>
+
+<style>
+  #animated-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hex-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(30deg, var(--color-accent-primary) 12%, transparent 12.5%, transparent 87%, var(--color-accent-primary) 87.5%, var(--color-accent-primary)),
+      linear-gradient(150deg, var(--color-accent-primary) 12%, transparent 12.5%, transparent 87%, var(--color-accent-primary) 87.5%, var(--color-accent-primary)),
+      linear-gradient(30deg, var(--color-accent-primary) 12%, transparent 12.5%, transparent 87%, var(--color-accent-primary) 87.5%, var(--color-accent-primary)),
+      linear-gradient(150deg, var(--color-accent-primary) 12%, transparent 12.5%, transparent 87%, var(--color-accent-primary) 87.5%, var(--color-accent-primary)),
+      linear-gradient(60deg, var(--color-accent-secondary) 25%, transparent 25.5%, transparent 75%, var(--color-accent-secondary) 75%, var(--color-accent-secondary)),
+      linear-gradient(60deg, var(--color-accent-secondary) 25%, transparent 25.5%, transparent 75%, var(--color-accent-secondary) 75%, var(--color-accent-secondary));
+    background-size: 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+    opacity: 0.05;
+  }
+
+  #network-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('network-canvas') as HTMLCanvasElement;
+  if (canvas) {
+    // Skip all animation initialization for users who prefer reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // No-op: no nodes, no rAF, no event listeners, no ResizeObserver
+    } else {
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      // -- Config (tuned defaults from playground) --
+      const NODE_COUNT = window.innerWidth < 768 ? 20 : 40;
+      const NODE_SIZE = 3;
+      const NODE_OPACITY = 0.4;
+      const GLOW_INTENSITY = 8;
+      const MAX_DISTANCE = window.innerWidth < 768 ? 100 : 150;
+      const LINE_OPACITY = 0.08;
+      const LINE_WIDTH = 0.5;
+      const SPEED = 0.2;
+      const MOUSE_RADIUS = 120;
+      const MOUSE_FORCE = 0.8;
+
+      // Accent color RGB
+      const PRIMARY = { r: 0, g: 212, b: 170 }; // #00d4aa
+      const SECONDARY = { r: 99, g: 102, b: 241 }; // #6366f1
+
+      // -- State --
+      let W = 0;
+      let H = 0;
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let animationId: number | null = null;
+      let lastTime = 0;
+      let isVisible = true;
+
+      interface Node {
+        x: number;
+        y: number;
+        vx: number;
+        vy: number;
+        baseOpacity: number;
+        phase: number;
+      }
+
+      let nodes: Node[] = [];
+
+      // Mouse with RAF-based throttle
+      const mouse = { x: -9999, y: -9999 };
+      let pendingMouseMove = false;
+
+      function handleMouseMove(e: MouseEvent) {
+        if (!pendingMouseMove) {
+          pendingMouseMove = true;
+          requestAnimationFrame(() => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            pendingMouseMove = false;
+          });
+        }
+      }
+
+      function handleMouseLeave() {
+        mouse.x = -9999;
+        mouse.y = -9999;
+      }
+
+      // -- Canvas sizing --
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth;
+        H = window.innerHeight;
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      // -- Node factory --
+      function createNode(): Node {
+        return {
+          x: Math.random() * W,
+          y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 2,
+          vy: (Math.random() - 0.5) * 2,
+          baseOpacity: 0.3 + Math.random() * 0.3,
+          phase: Math.random() * Math.PI * 2,
+        };
+      }
+
+      function initNodes() {
+        nodes = [];
+        for (let i = 0; i < NODE_COUNT; i++) {
+          nodes.push(createNode());
+        }
+      }
+
+      // -- Animation loop --
+      function animate(now: number) {
+        if (!isVisible) return;
+        animationId = requestAnimationFrame(animate);
+
+        const dt = Math.min(now - lastTime, 50);
+        lastTime = now;
+
+        if (dt === 0) return;
+
+        const speedFactor = SPEED * (dt / 16.667);
+
+        ctx.clearRect(0, 0, W, H);
+
+        // Update + draw nodes
+        for (let i = 0; i < nodes.length; i++) {
+          const n = nodes[i];
+
+          // Drift
+          n.x += n.vx * speedFactor;
+          n.y += n.vy * speedFactor;
+
+          // Soft bounce
+          if (n.x < 0) { n.x = 0; n.vx = Math.abs(n.vx); }
+          if (n.x > W) { n.x = W; n.vx = -Math.abs(n.vx); }
+          if (n.y < 0) { n.y = 0; n.vy = Math.abs(n.vy); }
+          if (n.y > H) { n.y = H; n.vy = -Math.abs(n.vy); }
+
+          // Mouse repulsion
+          if (mouse.x > -999) {
+            const dx = n.x - mouse.x;
+            const dy = n.y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < MOUSE_RADIUS && dist > 1) {
+              const force = (1 - dist / MOUSE_RADIUS) * MOUSE_FORCE * 0.05;
+              n.vx += (dx / dist) * force;
+              n.vy += (dy / dist) * force;
+            }
+          }
+
+          // Dampen
+          n.vx *= 0.999;
+          n.vy *= 0.999;
+
+          // Clamp velocity
+          const maxV = 1.5;
+          const vel = Math.sqrt(n.vx * n.vx + n.vy * n.vy);
+          if (vel > maxV) {
+            n.vx = (n.vx / vel) * maxV;
+            n.vy = (n.vy / vel) * maxV;
+          }
+
+          // Pulsing opacity
+          n.phase += 0.008 * speedFactor;
+          const pulse = 0.8 + 0.2 * Math.sin(n.phase);
+          const opacity = n.baseOpacity * (NODE_OPACITY / 0.4) * pulse;
+
+          // Draw glow
+          if (GLOW_INTENSITY > 0) {
+            ctx.shadowBlur = GLOW_INTENSITY;
+            ctx.shadowColor = `rgba(${PRIMARY.r}, ${PRIMARY.g}, ${PRIMARY.b}, ${opacity * 0.6})`;
+          }
+
+          // Draw node
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, NODE_SIZE, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${PRIMARY.r}, ${PRIMARY.g}, ${PRIMARY.b}, ${opacity})`;
+          ctx.fill();
+
+          ctx.shadowBlur = 0;
+        }
+
+        // Draw connections
+        const maxDistSq = MAX_DISTANCE * MAX_DISTANCE;
+        ctx.lineWidth = LINE_WIDTH;
+
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const distSq = dx * dx + dy * dy;
+
+            if (distSq < maxDistSq) {
+              const dist = Math.sqrt(distSq);
+              const opacity = (1 - dist / MAX_DISTANCE) * LINE_OPACITY;
+
+              // Subtle color blend based on horizontal position
+              const midX = (nodes[i].x + nodes[j].x) / 2;
+              const blend = midX / W;
+              const r = Math.round(PRIMARY.r + (SECONDARY.r - PRIMARY.r) * blend * 0.3);
+              const g = Math.round(PRIMARY.g + (SECONDARY.g - PRIMARY.g) * blend * 0.3);
+              const b = Math.round(PRIMARY.b + (SECONDARY.b - PRIMARY.b) * blend * 0.3);
+
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Mouse glow halo
+        if (mouse.x > -999) {
+          const grad = ctx.createRadialGradient(
+            mouse.x, mouse.y, 0,
+            mouse.x, mouse.y, MOUSE_RADIUS,
+          );
+          grad.addColorStop(0, `rgba(${PRIMARY.r}, ${PRIMARY.g}, ${PRIMARY.b}, 0.04)`);
+          grad.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = grad;
+          ctx.fillRect(
+            mouse.x - MOUSE_RADIUS,
+            mouse.y - MOUSE_RADIUS,
+            MOUSE_RADIUS * 2,
+            MOUSE_RADIUS * 2,
+          );
+        }
+      }
+
+      // -- Start / stop logic --
+      function start() {
+        if (animationId !== null) return;
+        isVisible = true;
+        lastTime = performance.now();
+        animationId = requestAnimationFrame(animate);
+      }
+
+      function stop() {
+        isVisible = false;
+        if (animationId !== null) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        }
+      }
+
+      // -- Visibility change --
+      function handleVisibilityChange() {
+        if (document.hidden) {
+          stop();
+        } else {
+          start();
+        }
+      }
+
+      // -- ResizeObserver --
+      const resizeObserver = new ResizeObserver(() => {
+        resize();
+      });
+
+      // -- Init --
+      resize();
+      initNodes();
+      start();
+
+      resizeObserver.observe(document.getElementById('animated-bg')!);
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseleave', handleMouseLeave);
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+
+      // -- Cleanup on page hide (for bfcache etc.) --
+      window.addEventListener('pagehide', () => {
+        stop();
+        resizeObserver.disconnect();
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseleave', handleMouseLeave);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+      });
+    }
+    } // else (reduced-motion)
+  }
+</script>
