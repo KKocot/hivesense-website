@@ -36,6 +36,7 @@ const installCmd = `./scripts/install_app.sh --llm='bge-m3:latest' --vector_size
     position: relative;
     padding: 6rem 1rem;
     overflow: hidden;
+    min-height: auto;
   }
 
   @media (min-width: 768px) {
@@ -147,6 +148,12 @@ const installCmd = `./scripts/install_app.sh --llm='bge-m3:latest' --vector_size
     .btn-secondary {
       width: 100%;
       justify-content: center;
+    }
+
+    .cta-code pre {
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      word-break: break-all;
     }
   }
 </style>
