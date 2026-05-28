@@ -54,6 +54,7 @@ const endpoints = [
 <style>
   .api-section {
     padding: 4rem 1rem;
+    min-height: auto;
   }
 
   @media (min-width: 768px) {
@@ -63,6 +64,7 @@ const endpoints = [
   .api-inner {
     max-width: 50rem;
     margin: 0 auto;
+    overflow: hidden;
   }
 
   .section-header {
@@ -110,11 +112,15 @@ const endpoints = [
   }
 
   .api-card-header {
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--color-border);
     display: flex;
     align-items: center;
     gap: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .api-card-header { padding: 1rem 1.5rem; }
   }
 
   .api-method {
@@ -148,7 +154,11 @@ const endpoints = [
   }
 
   .api-card-body {
-    padding: 1.25rem 1.5rem;
+    padding: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .api-card-body { padding: 1.25rem 1.5rem; }
   }
 
   .api-card-title {
@@ -180,6 +190,14 @@ const endpoints = [
     line-height: 1.6;
     color: var(--color-text-muted);
     white-space: pre;
+  }
+
+  @media (max-width: 767px) {
+    .code-block pre {
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      word-break: break-all;
+    }
   }
 
   .code-block code {
