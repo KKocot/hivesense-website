@@ -1,62 +1,56 @@
 ---
-const currentYear = new Date().getFullYear();
+import { LINKS } from "../config/links";
 ---
 
 <footer class="tmux-status" role="contentinfo">
   <div class="tmux-status__bar">
     <span class="tmux-status__segment"
       ><a
-        href="https://gitlab.syncad.com/hive/hivesense"
+        href={LINKS.HIVESENSE}
         class="tmux-status__link"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="HiveSense v1.0.0 — GitLab repository"
-        >[hivesense v1.0.0]</a
+        aria-label="HiveSense — opens in new tab"
+        >[hivesense]</a
       ></span
-    ><span class="tmux-status__sep" aria-hidden="true">│</span><span
-      class="tmux-status__segment"
-      >&copy; {currentYear} HiveSense</span
     ><span class="tmux-status__sep" aria-hidden="true">│</span><a
-      href="https://gitlab.syncad.com/hive/hivesense/-/blob/main/LICENSE"
+      href={LINKS.MIT_LICENSE}
       target="_blank"
       rel="noopener noreferrer"
       class="tmux-status__link"
       aria-label="MIT License — opens in new tab"
       >MIT License</a
     ><span class="tmux-status__sep" aria-hidden="true">│</span><a
-      href="https://gitlab.syncad.com/hive/hivesense"
+      href={LINKS.HIVE}
       target="_blank"
       rel="noopener noreferrer"
       class="tmux-status__link"
-      aria-label="HiveSense on GitLab — opens in new tab"
-      >GitLab</a
+      aria-label="Hive blockchain — opens in new tab"
+      >Hive</a
     ><span class="tmux-status__sep" aria-hidden="true">│</span><a
-      href="https://hive.io"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="tmux-status__link"
-      aria-label="Hive blockchain ecosystem — opens in new tab"
-      >built for <span class="tmux-status__hive">hive</span></a
-    ><span class="tmux-status__sep" aria-hidden="true">│</span><a
-      href="https://tools.openhive.network"
+      href={LINKS.HIVE_TOOLS}
       target="_blank"
       rel="noopener noreferrer"
       class="tmux-status__link"
       aria-label="Hive Tools — opens in new tab"
       >Hive Tools</a
-    ><span class="tmux-status__sep" aria-hidden="true">│</span><span
-      class="tmux-status__dot"
-      aria-label="Status: online">●</span
+    ><span class="tmux-status__sep" aria-hidden="true">│</span><a
+      href={LINKS.BLOCKCHAIN_WARES}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="tmux-status__link"
+      aria-label="Blockchain Wares — opens in new tab"
+      >Blockchain Wares</a
     >
   </div>
 </footer>
 
 <style>
   .tmux-status {
-    background-color: var(--color-bg-surface, #12131a);
-    border-top: 1px solid var(--tui-panel-border-color, rgba(255, 255, 255, 0.08));
-    font-family: var(--font-mono, monospace);
-    font-size: var(--text-xs, 0.75rem);
+    background-color: var(--color-bg-surface);
+    border-top: 1px solid var(--tui-panel-border-color);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
     letter-spacing: 0.04em;
     color: var(--color-text-muted);
     line-height: 1;
@@ -67,7 +61,8 @@ const currentYear = new Date().getFullYear();
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+    gap: 0;
+    padding: var(--space-2) var(--space-4);
     min-height: 2rem;
   }
 
@@ -78,8 +73,8 @@ const currentYear = new Date().getFullYear();
   }
 
   .tmux-status__sep {
-    color: var(--color-text-muted, rgba(255, 255, 255, 0.4));
-    padding-inline: 0.625em;
+    color: var(--color-text-muted);
+    padding-inline: var(--space-2);
     opacity: 0.5;
     user-select: none;
   }
@@ -88,37 +83,25 @@ const currentYear = new Date().getFullYear();
     color: var(--color-text-muted);
     text-decoration: none;
     white-space: nowrap;
-    transition: color var(--duration-fast, 150ms) var(--ease-out-quad, ease-out),
-                text-shadow var(--duration-fast, 150ms) var(--ease-out-quad, ease-out);
+    transition: color var(--duration-fast) var(--ease-out-quad);
   }
 
   .tmux-status__link:hover,
   .tmux-status__link:focus-visible {
-    color: var(--color-primary-bright, #00d4aa);
-    text-shadow: var(--glow-intensity, 0 0 8px) var(--glow-color, #00d4aa);
+    color: var(--color-primary-bright);
+    text-shadow: var(--glow-intensity) var(--glow-color);
   }
 
   .tmux-status__link:focus-visible {
-    outline: 2px solid var(--color-accent-primary, #00d4aa);
+    outline: 2px solid var(--color-accent-primary);
     outline-offset: 2px;
     border-radius: 2px;
   }
 
-  .tmux-status__hive {
-    color: var(--color-hive-text, #ff5070);
-    font-weight: 600;
-  }
-
-  .tmux-status__dot {
-    color: var(--color-accent-success, #00d4aa);
-    font-size: 0.625rem;
-    line-height: 1;
-  }
-
   @media (max-width: 40rem) {
     .tmux-status__bar {
-      gap: 0.25rem 0.5rem;
-      padding: var(--space-2, 0.5rem) var(--space-2, 0.5rem);
+      padding: var(--space-2) var(--space-2);
+      justify-content: center;
     }
   }
 </style>
