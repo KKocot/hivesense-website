@@ -1,5 +1,4 @@
 ---
-const suggestions = ['DeFi strategies', 'Witness voting', 'Community proposals'];
 ---
 
 <section class="hero" aria-label="Introduction">
@@ -8,44 +7,80 @@ const suggestions = ['DeFi strategies', 'Witness voting', 'Community proposals']
   </div>
 
   <div class="hero-content">
-    <span class="hero-badge hero-anim hero-anim--0">
-      <span class="hero-badge-dot" aria-hidden="true"></span>
-      Open Source &middot; Powered by Hive
-    </span>
-
-    <h1 class="hero-title hero-anim hero-anim--1">
-      Semantic Search for the Hive Blockchain
+    <h1 class="hero-title hero-anim hero-anim--0">
+      HiveSense
     </h1>
 
-    <p class="hero-subtitle hero-anim hero-anim--2">
-      Discover meaning in millions of posts. ML-powered vector search with HNSW indexing — find content by what it means, not just what it says.
+    <p class="hero-subtitle hero-anim hero-anim--1">
+      Semantic search for the Hive blockchain. Find content by meaning, not keywords.
     </p>
 
-    <div class="hero-cta hero-anim hero-anim--3">
-      <a
-        href="https://gitlab.syncad.com/hive/hivesense"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-primary"
-        aria-label="View on GitLab (opens in new tab)"
-      >
-        View on GitLab
-        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10" /></svg>
-      </a>
-      <a href="#api" class="btn-secondary">
-        Explore API
-      </a>
-    </div>
+    <figure class="hero-mockup hero-anim hero-anim--2" aria-label="HiveSense application preview">
+      <div class="mockup-window">
+        <div class="mockup-titlebar">
+          <div class="mockup-dots" aria-hidden="true">
+            <span class="mockup-dot mockup-dot--close"></span>
+            <span class="mockup-dot mockup-dot--minimize"></span>
+            <span class="mockup-dot mockup-dot--maximize"></span>
+          </div>
+          <span class="mockup-title">HiveSense — Semantic Search</span>
+        </div>
 
-    <figure class="hero-mockup hero-anim hero-anim--4" aria-label="Search interface preview">
-      <div class="hero-search">
-        <svg class="hero-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-primary)" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <span class="hero-search-placeholder">Search for blockchain governance discussions...</span>
-      </div>
-      <div class="hero-suggestions">
-        {suggestions.map((s) => (
-          <span class="hero-suggestion-pill">{s}</span>
-        ))}
+        <div class="mockup-searchbar">
+          <svg class="mockup-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span class="mockup-query">blockchain governance discussions</span>
+          <span class="mockup-sort">Sort by: Relevance</span>
+        </div>
+
+        <div class="mockup-results">
+          <article class="mockup-result">
+            <div class="mockup-result-meta">
+              <span class="mockup-author">@dalz <span class="mockup-rep">(78)</span></span>
+              <span class="mockup-category">#hive-governance</span>
+            </div>
+            <h3 class="mockup-result-title">Decentralized Governance: Lessons from DHF Proposals</h3>
+            <p class="mockup-snippet">An analysis of how the Decentralized Hive Fund has shaped governance patterns, comparing proposal outcomes across three years...</p>
+            <div class="mockup-metrics">
+              <span class="mockup-payout">$14.82</span>
+              <span class="mockup-sep" aria-hidden="true">&middot;</span>
+              <span class="mockup-votes"><svg class="mockup-metric-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m-7 7 7-7 7 7"/></svg> 186</span>
+              <span class="mockup-sep" aria-hidden="true">&middot;</span>
+              <span class="mockup-comments"><svg class="mockup-metric-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 34</span>
+            </div>
+          </article>
+
+          <article class="mockup-result">
+            <div class="mockup-result-meta">
+              <span class="mockup-author">@blocktrades <span class="mockup-rep">(75)</span></span>
+              <span class="mockup-category">LeoFinance</span>
+            </div>
+            <h3 class="mockup-result-title">Witness Voting and Network Consensus Dynamics</h3>
+            <p class="mockup-snippet">Understanding the interplay between witness elections, governance decisions, and how stakeholder voting influences protocol development...</p>
+            <div class="mockup-metrics">
+              <span class="mockup-payout">$8.35</span>
+              <span class="mockup-sep" aria-hidden="true">&middot;</span>
+              <span class="mockup-votes"><svg class="mockup-metric-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m-7 7 7-7 7 7"/></svg> 124</span>
+              <span class="mockup-sep" aria-hidden="true">&middot;</span>
+              <span class="mockup-comments"><svg class="mockup-metric-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 18</span>
+            </div>
+          </article>
+
+          <article class="mockup-result mockup-result--last">
+            <div class="mockup-result-meta">
+              <span class="mockup-author">@howo <span class="mockup-rep">(74)</span></span>
+              <span class="mockup-category">#hive-dev</span>
+            </div>
+            <h3 class="mockup-result-title">Community Proposals: What Makes Them Pass or Fail</h3>
+            <p class="mockup-snippet">A deep dive into the factors behind successful and unsuccessful DHF proposals, with practical takeaways for future authors...</p>
+            <div class="mockup-metrics">
+              <span class="mockup-payout">$6.21</span>
+              <span class="mockup-sep" aria-hidden="true">&middot;</span>
+              <span class="mockup-votes"><svg class="mockup-metric-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m-7 7 7-7 7 7"/></svg> 97</span>
+              <span class="mockup-sep" aria-hidden="true">&middot;</span>
+              <span class="mockup-comments"><svg class="mockup-metric-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 12</span>
+            </div>
+          </article>
+        </div>
       </div>
     </figure>
 
@@ -65,29 +100,6 @@ const suggestions = ['DeFi strategies', 'Witness voting', 'Community proposals']
     inset: 0;
     overflow: hidden;
     z-index: 0;
-  }
-
-  .hero-bg::before {
-    content: '';
-    position: absolute;
-    top: -200px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 800px;
-    height: 600px;
-    background: radial-gradient(ellipse at center, var(--color-accent-primary-dim) 0%, transparent 70%);
-    filter: blur(80px);
-  }
-
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    top: -100px;
-    right: 10%;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, var(--color-accent-secondary-dim) 0%, transparent 70%);
-    filter: blur(60px);
   }
 
   .hero-dots {
@@ -125,42 +137,9 @@ const suggestions = ['DeFi strategies', 'Witness voting', 'Community proposals']
     animation: fade-up 500ms cubic-bezier(0.4, 0, 0.2, 1) both;
   }
 
-  .hero-anim--0 { animation-delay: 0ms; }
-  .hero-anim--1 { animation-delay: 100ms; animation-duration: 600ms; }
-  .hero-anim--2 { animation-delay: 200ms; }
-  .hero-anim--3 { animation-delay: 300ms; }
-  .hero-anim--4 { animation-delay: 400ms; animation-duration: 600ms; animation-name: fade-up-scale; }
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--color-border);
-    background: var(--color-surface-2);
-    color: var(--color-text-muted);
-  }
-
-  @media (min-width: 768px) {
-    .hero-badge { font-size: 0.8125rem; }
-  }
-
-  .hero-badge-dot {
-    width: 0.375rem;
-    height: 0.375rem;
-    border-radius: 50%;
-    background: var(--color-accent-primary);
-    animation: pulse-dot 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
+  .hero-anim--0 { animation-delay: 0ms; animation-duration: 600ms; }
+  .hero-anim--1 { animation-delay: 100ms; }
+  .hero-anim--2 { animation-delay: 200ms; animation-duration: 600ms; animation-name: fade-up-scale; }
   .hero-title {
     margin-top: 1.5rem;
     font-size: clamp(2.5rem, 5vw + 1rem, 4rem);
@@ -168,10 +147,7 @@ const suggestions = ['DeFi strategies', 'Witness voting', 'Community proposals']
     letter-spacing: -0.02em;
     line-height: 1.1;
     max-width: 50rem;
-    background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-accent-primary) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-text-primary);
   }
 
   .hero-subtitle {
@@ -183,131 +159,201 @@ const suggestions = ['DeFi strategies', 'Witness voting', 'Community proposals']
     max-width: 37.5rem;
   }
 
-  .hero-cta {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: var(--color-accent-primary);
-    color: var(--color-bg-base);
-    font-weight: 600;
-    font-size: 0.9375rem;
-    border-radius: var(--radius-full);
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: var(--shadow-button);
-    transition: filter var(--transition-fast), box-shadow var(--transition-fast);
-  }
-
-  .btn-primary:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 0 20px var(--color-accent-primary-mid);
-  }
-
-  .btn-primary:active {
-    filter: brightness(0.95);
-    transform: scale(0.98);
-  }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: transparent;
-    color: var(--color-text-primary);
-    font-weight: 500;
-    font-size: 0.9375rem;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--color-border);
-    cursor: pointer;
-    text-decoration: none;
-    transition: background var(--transition-fast), border-color var(--transition-fast);
-  }
-
-  .btn-secondary:hover {
-    background: var(--color-surface-2);
-    border-color: var(--color-border-hover);
-  }
-
   .hero-mockup {
-    margin-top: 3rem;
+    margin-top: 2.5rem;
     width: 100%;
-    max-width: 40rem;
-    box-shadow: 0 0 60px var(--color-accent-primary-dim), 0 0 120px var(--color-accent-primary-dim);
+    max-width: 46rem;
     border-radius: var(--radius-lg);
+    text-align: left;
   }
 
-  .hero-search {
+  .mockup-window {
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .mockup-titlebar {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 1rem 1.25rem;
-    background: var(--color-surface-1);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 0.75rem 1rem;
+    background: var(--color-bg-base);
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .hero-search-icon {
-    flex-shrink: 0;
+  .mockup-dots {
+    display: flex;
+    gap: 0.375rem;
   }
 
-  .hero-search-placeholder {
-    font-size: 0.875rem;
+  .mockup-dot {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: var(--radius-full);
+  }
+
+  .mockup-dot--close { background: #ef4444; }
+  .mockup-dot--minimize { background: #eab308; }
+  .mockup-dot--maximize { background: #22c55e; }
+
+  .mockup-title {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
     color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .mockup-searchbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface-2);
+  }
+
+  .mockup-search-icon {
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+  }
+
+  .mockup-query {
+    flex: 1;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text-primary);
+  }
+
+  .mockup-sort {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    opacity: 0.7;
+  }
+
+  .mockup-results {
+    padding: 0;
+  }
+
+  .mockup-result {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .mockup-result--last {
+    border-bottom: none;
+  }
+
+  .mockup-result-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .mockup-author {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+  }
+
+  .mockup-rep {
     opacity: 0.6;
   }
 
-  @media (min-width: 768px) {
-    .hero-search-placeholder { font-size: 1rem; }
+  .mockup-category {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+    background: var(--color-surface-3);
+    padding: 0.0625rem 0.375rem;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    opacity: 0.8;
   }
 
-  .hero-suggestions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
-    background: var(--color-surface-1);
-    border: 1px solid var(--color-border);
-    border-top: none;
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-  }
-
-  .hero-suggestion-pill {
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 500;
+  .mockup-result-title {
+    font-size: 0.8125rem;
+    font-weight: 600;
     color: var(--color-accent-primary);
-    background: var(--color-accent-primary-dim);
-    border: 1px solid var(--color-accent-primary-mid);
-    border-radius: var(--radius-full);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .mockup-snippet {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+    margin-top: 0.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .mockup-metrics {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-top: 0.375rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+    opacity: 0.7;
+  }
+
+  .mockup-metric-icon {
+    display: inline-block;
+    vertical-align: -0.125rem;
+    flex-shrink: 0;
+  }
+
+  .mockup-payout {
+    color: var(--color-text-primary);
+    font-weight: 500;
+    opacity: 0.85;
+  }
+
+  .mockup-sep {
+    opacity: 0.4;
+    user-select: none;
+  }
+
+  .mockup-votes,
+  .mockup-comments {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.1875rem;
+  }
+
+  @media (min-width: 768px) {
+    .mockup-titlebar { padding: 0.75rem 1.25rem; }
+    .mockup-searchbar { padding: 0.75rem 1.25rem; }
+    .mockup-result { padding: 0.875rem 1.25rem; }
+    .mockup-query { font-size: 0.875rem; }
+    .mockup-result-title { font-size: 0.875rem; }
+    .mockup-snippet { font-size: 0.8125rem; }
+    .mockup-metrics { font-size: 0.75rem; }
+  }
+
+  @media (max-width: 479px) {
+    .mockup-result { padding: 0.625rem 0.75rem; }
+    .mockup-result-title { font-size: 0.75rem; }
+    .mockup-author { font-size: 0.625rem; }
+    .mockup-category { font-size: 0.5625rem; }
+    .mockup-snippet { font-size: 0.6875rem; }
+    .mockup-metrics { font-size: 0.625rem; }
+    .mockup-sort { font-size: 0.5625rem; }
   }
 
   @media (max-width: 639px) {
     .hero {
       padding-top: 6rem;
       padding-bottom: 4rem;
-    }
-
-    .hero-cta {
-      flex-direction: column;
-      width: 100%;
-      padding: 0 1rem;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      width: 100%;
-      justify-content: center;
     }
   }
 </style>
