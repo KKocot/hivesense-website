@@ -1,34 +1,40 @@
 ---
-const features = [
+const modules = [
   {
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="m8 8 2 2"/><path d="m14 8-2 2"/><path d="m8 14 2-2"/></svg>`,
-    title: 'Semantic Search',
-    description: 'Search by meaning, not keywords. Find posts about "blockchain governance" even when those words aren\'t used.',
+    name: 'semantic-search/',
+    desc: 'Search by meaning, not keywords.',
+    stat: '<100ms',
+    last: false,
   },
   {
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="12" cy="18" r="3"/><line x1="8.5" y1="7.5" x2="10.5" y2="16"/><line x1="15.5" y1="7.5" x2="13.5" y2="16"/><line x1="9" y1="6" x2="15" y2="6"/></svg>`,
-    title: 'Similar Posts',
-    description: 'Discover related content for any post. HNSW-indexed vector similarity returns results in <100ms.',
+    name: 'similar-posts/',
+    desc: 'HNSW nearest neighbors.',
+    stat: '<100ms response',
+    last: false,
   },
   {
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><circle cx="19" cy="6" r="2"/><circle cx="22" cy="13" r="2"/><line x1="19" y1="8" x2="22" y2="11" opacity="0.5"/></svg>`,
-    title: 'Thematic Contributors',
-    description: 'Find authors who write about specific topics across the entire blockchain.',
+    name: 'thematic-authors/',
+    desc: 'Find contributors by topic expertise.',
+    stat: null,
+    last: false,
   },
   {
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/><path d="M14 2v4h6" opacity="0.5"/></svg>`,
-    title: 'Smart Chunking',
-    description: 'Posts split into 512-token chunks with 15% overlap. No meaning lost at boundaries.',
+    name: 'smart-chunking/',
+    desc: '512 tokens, 15% overlap, sentence-aware.',
+    stat: null,
+    last: false,
   },
   {
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6"/><path d="M2.5 12A10 10 0 0 1 18.4 4.6"/><path d="M21.5 12A10 10 0 0 1 5.6 19.4"/></svg>`,
-    title: 'Real-time Sync',
-    description: 'HAF-based scheduler continuously processes new blocks. Always up to date.',
+    name: 'realtime-sync/',
+    desc: 'HAF-based blockchain scheduler.',
+    stat: null,
+    last: false,
   },
   {
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><path d="M12 2v20" opacity="0.3"/></svg>`,
-    title: 'Open Source',
-    description: 'Fully open source, deployed on Hive infrastructure. Run your own node or use the public API.',
+    name: 'open-source/',
+    desc: 'Self-host or use public API.',
+    stat: null,
+    last: true,
   },
 ];
 ---
@@ -36,24 +42,126 @@ const features = [
 <section id="features" class="features-section" aria-labelledby="features-title">
   <div class="features-container">
     <div class="section-header animate-fade-up">
-      <span class="overline">Features</span>
-      <h2 id="features-title" class="section-title">What HiveSense Does</h2>
-      <p class="section-subtitle">ML-powered semantic understanding of Hive blockchain content.</p>
+      <h2 id="features-title" class="section-title">Modules</h2>
+      <p class="section-subtitle">Six modules. One API surface.</p>
     </div>
 
-    <div class="features-grid animate-stagger">
-      {features.map((feature, i) => (
-        <div class="feature-card animate-fade-up" style={`transition-delay: ${i * 60}ms;`}>
-          <div class="feature-icon-wrap" aria-hidden="true">
-            <span set:html={feature.icon} />
+    <div class="terminal-wrap animate-fade-up" style="transition-delay: 80ms;">
+      <div class="code-block" role="img" aria-label="Tree view of HiveSense modules: semantic-search, similar-posts, thematic-authors, smart-chunking, realtime-sync, open-source">
+        <div class="code-body">
+          <div class="tree-command" aria-hidden="true">
+            <span class="tree-prompt">$</span> tree hivesense/modules/
           </div>
-          <h3 class="feature-card-title">{feature.title}</h3>
-          <p class="feature-card-desc">{feature.description}</p>
+
+          <div class="tree-output" role="list" aria-label="Module list">
+            <div class="tree-root" aria-hidden="true">hivesense/modules/</div>
+
+            {modules.map((mod, i) => (
+              <div
+                class="tree-line"
+                role="listitem"
+                data-tree-index={i}
+              >
+                <span class="tree-connector" aria-hidden="true">{mod.last ? '└── ' : '├── '}</span><span class="tree-module">{mod.name}</span>
+                <span class="tree-spacer" aria-hidden="true">{' '.repeat(Math.max(1, 22 - mod.name.length))}</span>
+                <span class="tree-desc">{mod.desc}</span>
+                {mod.stat && (
+                  <span class="tree-stat"> {mod.stat}</span>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div class="tree-summary" aria-hidden="true">
+            <br />6 directories, 0 files
+          </div>
         </div>
-      ))}
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  function initTreeAnimation() {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const terminalWrap = document.querySelector('.terminal-wrap');
+    if (!terminalWrap) return;
+
+    const lines = terminalWrap.querySelectorAll<HTMLElement>('.tree-line');
+    const command = terminalWrap.querySelector<HTMLElement>('.tree-command');
+    const root = terminalWrap.querySelector<HTMLElement>('.tree-root');
+    const summary = terminalWrap.querySelector<HTMLElement>('.tree-summary');
+
+    if (prefersReduced) {
+      // Show everything immediately
+      [command, root, summary].forEach(el => {
+        if (el) el.style.opacity = '1';
+      });
+      lines.forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+      return;
+    }
+
+    // Hide elements initially
+    [command, root, summary].forEach(el => {
+      if (el) el.style.opacity = '0';
+    });
+    lines.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(0.25rem)';
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Animate command prompt
+            if (command) {
+              command.style.transition = 'opacity 300ms ease-out';
+              command.style.opacity = '1';
+            }
+
+            // Animate root path
+            setTimeout(() => {
+              if (root) {
+                root.style.transition = 'opacity 300ms ease-out';
+                root.style.opacity = '1';
+              }
+            }, 200);
+
+            // Animate each tree line with stagger
+            lines.forEach((line, i) => {
+              setTimeout(() => {
+                line.style.transition = 'opacity 300ms ease-out, transform 300ms ease-out';
+                line.style.opacity = '1';
+                line.style.transform = 'translateY(0)';
+              }, 350 + i * 120);
+            });
+
+            // Animate summary
+            setTimeout(() => {
+              if (summary) {
+                summary.style.transition = 'opacity 300ms ease-out';
+                summary.style.opacity = '1';
+              }
+            }, 350 + lines.length * 120 + 100);
+
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -40px 0px' },
+    );
+
+    observer.observe(terminalWrap);
+  }
+
+  // Run on load and on Astro page transitions
+  initTreeAnimation();
+  document.addEventListener('astro:after-swap', initTreeAnimation);
+</script>
 
 <style>
   .features-section {
@@ -65,29 +173,18 @@ const features = [
   }
 
   .features-container {
-    max-width: 75rem;
+    max-width: 50rem;
     margin: 0 auto;
   }
 
   .section-header {
     text-align: center;
-    margin-bottom: 3rem;
-    max-width: 37.5rem;
+    margin-bottom: 2.5rem;
     margin-inline: auto;
   }
 
   @media (min-width: 768px) {
-    .section-header { margin-bottom: 4rem; }
-  }
-
-  .overline {
-    font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-accent-primary);
-    margin-bottom: 0.75rem;
-    display: block;
+    .section-header { margin-bottom: 3rem; }
   }
 
   .section-title {
@@ -96,7 +193,7 @@ const features = [
     letter-spacing: -0.02em;
     line-height: 1.15;
     color: var(--color-text-primary);
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
 
   .section-subtitle {
@@ -105,76 +202,101 @@ const features = [
     color: var(--color-text-muted);
   }
 
-  .features-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  /* Code block */
+  .terminal-wrap {
+    width: 100%;
   }
 
-  @media (min-width: 768px) {
-    .features-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
-  }
-
-  @media (min-width: 1024px) {
-    .features-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  }
-
-  .feature-card {
-    position: relative;
+  .code-block {
     background: var(--color-surface-1);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: 2rem;
-    transition: transform var(--transition-base),
-                box-shadow var(--transition-base),
-                border-color var(--transition-fast);
   }
 
-  .feature-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-card-hover);
-    border-color: var(--color-border-hover);
+  .code-body {
+    padding: 1.25rem 1.25rem 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.75;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .feature-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 20%;
-    right: 20%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-accent-primary-mid), transparent);
-    opacity: 0;
-    transition: opacity var(--transition-base);
+  @media (min-width: 768px) {
+    .code-body {
+      padding: 1.5rem 1.5rem 1.75rem;
+      font-size: 0.9375rem;
+    }
   }
 
-  .feature-card:hover::before {
-    opacity: 1;
-  }
-
-  .feature-icon-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    background: var(--color-accent-primary-dim);
-    border-radius: var(--radius-md);
-    color: var(--color-accent-primary);
-  }
-
-  .feature-card-title {
-    font-size: clamp(1.25rem, 1vw + 0.75rem, 1.5rem);
-    font-weight: 600;
-    line-height: 1.3;
+  /* Command prompt line */
+  .tree-command {
     color: var(--color-text-primary);
-    margin-top: 1.25rem;
+    margin-bottom: 0.25rem;
+    white-space: pre;
   }
 
-  .feature-card-desc {
-    font-size: 1rem;
-    line-height: 1.6;
+  .tree-prompt {
+    color: var(--color-accent-primary);
+    font-weight: 600;
+  }
+
+  /* Root directory */
+  .tree-root {
+    color: var(--color-text-primary);
+    font-weight: 600;
+    white-space: pre;
+  }
+
+  /* Tree lines */
+  .tree-line {
+    white-space: pre;
+    will-change: opacity, transform;
+  }
+
+  .tree-connector {
     color: var(--color-text-muted);
-    margin-top: 0.5rem;
+    opacity: 0.4;
+    user-select: none;
+  }
+
+  .tree-module {
+    color: var(--color-accent-primary);
+    font-weight: 500;
+  }
+
+  .tree-spacer {
+    user-select: none;
+  }
+
+  .tree-desc {
+    color: var(--color-text-muted);
+  }
+
+  .tree-stat {
+    color: var(--color-accent-secondary);
+    font-weight: 500;
+  }
+
+  /* Summary */
+  .tree-summary {
+    color: var(--color-text-muted);
+    opacity: 0.5;
+    white-space: pre;
+  }
+
+  /* Small screens: tighter spacing */
+  @media (max-width: 479px) {
+    .code-body {
+      padding: 1rem 0.75rem 1.25rem;
+      font-size: 0.6875rem;
+      line-height: 1.85;
+    }
+  }
+
+  @media (min-width: 480px) and (max-width: 639px) {
+    .code-body {
+      font-size: 0.75rem;
+    }
   }
 </style>
