@@ -3,7 +3,6 @@ const navLinks = [
   { label: 'Features', href: '#features' },
   { label: 'How it Works', href: '#how-it-works' },
   { label: 'API', href: '#api' },
-  { label: 'Tech Stack', href: '#tech-stack' },
 ];
 
 const gitlabUrl = 'https://gitlab.syncad.com/hive/hivesense';
@@ -174,7 +173,7 @@ const hiveBlogUrl = 'https://blog.openhive.network/search';
   }
 
   const allNavLinks = document.querySelectorAll<HTMLAnchorElement>('a.nav-link[data-section]');
-  const sectionIds = ['features', 'how-it-works', 'api', 'tech-stack'];
+  const sectionIds = ['features', 'how-it-works', 'api'];
   const sections = sectionIds
     .map((id) => document.getElementById(id))
     .filter((el): el is HTMLElement => el !== null);
