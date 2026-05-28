@@ -3,11 +3,10 @@ const installCmd = `./scripts/install_app.sh --llm='bge-m3:latest' --vector_size
 ---
 
 <section class="cta-section" aria-labelledby="cta-title">
-  <div class="cta-bg" aria-hidden="true"></div>
   <div class="cta-inner">
     <div class="cta-content animate-fade-up">
-      <h2 id="cta-title" class="cta-title">Start Exploring Hive Content</h2>
-      <p class="cta-subtitle">Open source, self-hostable, and ready to deploy. Dive into semantic search on the Hive blockchain.</p>
+      <h2 id="cta-title" class="cta-title">Run It</h2>
+      <p class="cta-subtitle">MIT license. Docker one-liner. PostgreSQL + pgvector.</p>
 
       <div class="cta-buttons">
         <a
@@ -15,20 +14,10 @@ const installCmd = `./scripts/install_app.sh --llm='bge-m3:latest' --vector_size
           target="_blank"
           rel="noopener noreferrer"
           class="btn-primary"
-          aria-label="View on GitLab (opens in new tab)"
+          aria-label="GitLab repository (opens in new tab)"
         >
           <svg class="size-4" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 30.4L21.3 14.1H10.7L16 30.4Z"/><path d="M16 30.4L10.7 14.1H2.4L16 30.4Z" opacity="0.7"/><path d="M2.4 14.1L0.5 20.1C0.3 20.7 0.5 21.4 1 21.8L16 30.4L2.4 14.1Z" opacity="0.5"/><path d="M2.4 14.1H10.7L7.4 3.9C7.2 3.3 6.4 3.3 6.2 3.9L2.4 14.1Z"/><path d="M16 30.4L21.3 14.1H29.6L16 30.4Z" opacity="0.7"/><path d="M29.6 14.1L31.5 20.1C31.7 20.7 31.5 21.4 31 21.8L16 30.4L29.6 14.1Z" opacity="0.5"/><path d="M29.6 14.1H21.3L24.6 3.9C24.8 3.3 25.6 3.3 25.8 3.9L29.6 14.1Z"/></svg>
-          View on GitLab
-        </a>
-        <a
-          href="https://api.hive.blog/hivesense-swagger"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn-secondary"
-          aria-label="API Documentation (opens in new tab)"
-        >
-          API Documentation
-          <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7v10" /></svg>
+          GitLab
         </a>
       </div>
 
@@ -51,13 +40,6 @@ const installCmd = `./scripts/install_app.sh --llm='bge-m3:latest' --vector_size
 
   @media (min-width: 768px) {
     .cta-section { padding: 8rem 1.5rem; }
-  }
-
-  .cta-bg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at center, var(--color-accent-primary-dim) 0%, transparent 60%);
-    pointer-events: none;
   }
 
   .cta-inner {
@@ -114,30 +96,10 @@ const installCmd = `./scripts/install_app.sh --llm='bge-m3:latest' --vector_size
 
   .btn-primary:hover {
     filter: brightness(1.1);
-    box-shadow: 0 0 20px var(--color-accent-primary-mid);
+    box-shadow: var(--shadow-button);
   }
 
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: transparent;
-    color: var(--color-text-primary);
-    font-weight: 500;
-    font-size: 0.9375rem;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--color-border);
-    text-decoration: none;
-    transition: background var(--transition-fast), border-color var(--transition-fast);
-  }
-
-  .btn-secondary:hover {
-    background: var(--color-surface-2);
-    border-color: var(--color-border-hover);
-  }
-
-  .cta-install {
+.cta-install {
     margin-top: 2.5rem;
   }
 
