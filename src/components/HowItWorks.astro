@@ -1,85 +1,192 @@
 ---
 const steps = [
   {
-    number: '01',
-    title: 'Ingest & Chunk',
-    description: 'HAF scheduler collects posts from Hive blocks. Text is cleaned, stripped of markdown/links, and split into 512-token chunks with overlap.',
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
+    name: 'ingest',
+    desc: 'HAF scheduler collects posts. Clean markdown, split 512-tok chunks w/ overlap.',
+    values: ['HAF', '512-tok'],
   },
   {
-    number: '02',
-    title: 'Embed',
-    description: 'Each chunk is sent to Ollama for ML embedding generation. 768-dimensional vectors capture semantic meaning of the content.',
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>`,
+    name: 'embed',
+    desc: 'Chunks passed to Ollama ML model. 768-dim semantic vectors generated.',
+    values: ['Ollama', '768-dim'],
   },
   {
-    number: '03',
-    title: 'Search',
-    description: 'Vectors stored in PostgreSQL with pgvector. HNSW index enables sub-100ms cosine similarity search across millions of posts.',
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`,
+    name: 'search',
+    desc: 'pgvector + HNSW index. Sub-100ms cosine similarity across millions of posts.',
+    values: ['pgvector', 'Sub-100ms'],
   },
 ];
 ---
 
-<section id="how-it-works" class="how-section" aria-labelledby="how-title">
-  <div class="how-inner">
+<section id="how-it-works" class="pipeline-section" aria-labelledby="pipeline-title">
+  <div class="pipeline-container">
     <div class="section-header animate-fade-up">
-      <span class="overline">How It Works</span>
-      <h2 id="how-title" class="section-title">From Blockchain to Meaning</h2>
+      <h2 id="pipeline-title" class="section-title">From Blockchain to Meaning</h2>
+      <p class="section-subtitle">Three-stage pipeline. Raw blocks in, semantic search out.</p>
     </div>
 
-    <div class="steps-grid">
-      {steps.map((step, i) => (
-        <div class="step-wrap">
-          <div class="step-card animate-fade-up" style={`transition-delay: ${i * 80}ms;`}>
-            <span class="step-number" aria-hidden="true">{step.number}</span>
-            <div class="step-icon" aria-hidden="true" set:html={step.icon} />
-            <h3 class="step-title">{step.title}</h3>
-            <p class="step-desc">{step.description}</p>
+    <div class="terminal-wrap animate-fade-up" style="transition-delay: 80ms;">
+      <div
+        class="code-block"
+        role="img"
+        aria-label="Pipeline diagram showing three stages: ingest, embed, and search — processing Hive blockchain data into searchable semantic vectors"
+      >
+        <div class="code-body">
+          <div class="pipe-command" aria-hidden="true">
+            <span class="pipe-prompt">$</span> hivesense pipeline --status
           </div>
-          {i < steps.length - 1 && (
-            <div class="step-connector" aria-hidden="true"></div>
-          )}
+
+          <div class="pipe-output" role="list" aria-label="Pipeline stages">
+            {steps.map((step, i) => (
+              <Fragment>
+                <div
+                  class="pipe-step"
+                  role="listitem"
+                  data-pipe-index={i}
+                >
+                  <span class="pipe-label-wrap">
+                    <span class="pipe-name">{step.name}</span>
+                    <span class="pipe-dashes" aria-hidden="true">
+                      {' ── '}
+                    </span>
+                  </span>
+                  <span class="pipe-desc">
+                    {step.desc.split(/(\b(?:HAF|512-tok|Ollama|768-dim|pgvector|Sub-100ms|HNSW)\b)/g).map((part) =>
+                      step.values.includes(part) || part === 'HNSW'
+                        ? <span class="pipe-value">{part}</span>
+                        : part
+                    )}
+                  </span>
+                </div>
+                {i < steps.length - 1 && (
+                  <div class="pipe-arrow" aria-hidden="true" data-pipe-arrow={i}>
+                    {'     ↓'}
+                  </div>
+                )}
+              </Fragment>
+            ))}
+          </div>
+
+          <div class="pipe-status" aria-hidden="true">
+            <br /><span class="pipe-check">✓</span> pipeline healthy
+          </div>
         </div>
-      ))}
+      </div>
     </div>
   </div>
 </section>
 
+<script>
+  function initPipelineAnimation() {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const terminalWrap = document.querySelector('#how-it-works .terminal-wrap');
+    if (!terminalWrap) return;
+
+    const command = terminalWrap.querySelector<HTMLElement>('.pipe-command');
+    const pipeSteps = terminalWrap.querySelectorAll<HTMLElement>('.pipe-step');
+    const arrows = terminalWrap.querySelectorAll<HTMLElement>('.pipe-arrow');
+    const status = terminalWrap.querySelector<HTMLElement>('.pipe-status');
+
+    if (prefersReduced) {
+      [command, status].forEach(el => {
+        if (el) el.style.opacity = '1';
+      });
+      pipeSteps.forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+      arrows.forEach(el => {
+        el.style.opacity = '1';
+      });
+      return;
+    }
+
+    // Hide elements initially
+    [command, status].forEach(el => {
+      if (el) el.style.opacity = '0';
+    });
+    pipeSteps.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(0.25rem)';
+    });
+    arrows.forEach(el => {
+      el.style.opacity = '0';
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Animate command prompt
+            if (command) {
+              command.style.transition = 'opacity 300ms ease-out';
+              command.style.opacity = '1';
+            }
+
+            // Animate each step + arrow with stagger
+            pipeSteps.forEach((step, i) => {
+              const baseDelay = 300 + i * 280;
+
+              setTimeout(() => {
+                step.style.transition = 'opacity 300ms ease-out, transform 300ms ease-out';
+                step.style.opacity = '1';
+                step.style.transform = 'translateY(0)';
+              }, baseDelay);
+
+              // Animate arrow after step
+              if (arrows[i]) {
+                setTimeout(() => {
+                  arrows[i].style.transition = 'opacity 250ms ease-out';
+                  arrows[i].style.opacity = '1';
+                }, baseDelay + 150);
+              }
+            });
+
+            // Animate status line at the end
+            const totalDelay = 300 + pipeSteps.length * 280 + 100;
+            setTimeout(() => {
+              if (status) {
+                status.style.transition = 'opacity 300ms ease-out';
+                status.style.opacity = '1';
+              }
+            }, totalDelay);
+
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -40px 0px' },
+    );
+
+    observer.observe(terminalWrap);
+  }
+
+  initPipelineAnimation();
+  document.addEventListener('astro:after-swap', initPipelineAnimation);
+</script>
+
 <style>
-  .how-section {
+  .pipeline-section {
     padding: 4rem 1rem;
-    background: var(--color-surface-1);
   }
 
   @media (min-width: 768px) {
-    .how-section { padding: 6rem 1.5rem; }
+    .pipeline-section { padding: 6rem 1.5rem; }
   }
 
-  .how-inner {
-    max-width: 75rem;
+  .pipeline-container {
+    max-width: 50rem;
     margin: 0 auto;
   }
 
   .section-header {
     text-align: center;
-    margin-bottom: 3rem;
-    max-width: 37.5rem;
+    margin-bottom: 2.5rem;
     margin-inline: auto;
   }
 
   @media (min-width: 768px) {
-    .section-header { margin-bottom: 4rem; }
-  }
-
-  .overline {
-    font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-accent-primary);
-    margin-bottom: 0.75rem;
-    display: block;
+    .section-header { margin-bottom: 3rem; }
   }
 
   .section-title {
@@ -88,88 +195,139 @@ const steps = [
     letter-spacing: -0.02em;
     line-height: 1.15;
     color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
   }
 
-  .steps-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  @media (min-width: 1024px) {
-    .steps-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-  }
-
-  .step-wrap {
-    position: relative;
-  }
-
-  .step-card {
-    position: relative;
-    background: var(--color-surface-2);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: 2rem;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  .step-number {
-    position: absolute;
-    top: 0.5rem;
-    right: 1rem;
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--color-accent-primary);
-    opacity: 0.1;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .step-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    margin: 0 auto 1.25rem;
-    color: var(--color-accent-primary);
-    background: var(--color-accent-primary-dim);
-    border-radius: var(--radius-md);
-  }
-
-  .step-title {
-    font-size: clamp(1.25rem, 1vw + 0.75rem, 1.5rem);
-    font-weight: 600;
-    line-height: 1.3;
-    color: var(--color-text-primary);
-    margin-bottom: 0.5rem;
-  }
-
-  .step-desc {
-    font-size: 1rem;
+  .section-subtitle {
+    font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.25rem);
     line-height: 1.6;
     color: var(--color-text-muted);
   }
 
-  .step-connector {
-    display: none;
+  /* Code block — matches FeaturesGrid */
+  .terminal-wrap {
+    width: 100%;
   }
 
-  @media (min-width: 1024px) {
-    .step-connector {
-      display: block;
-      position: absolute;
-      top: 50%;
-      right: -0.75rem;
-      width: 1.5rem;
-      height: 0;
-      border-top: 2px dashed var(--color-border);
-      z-index: 1;
+  .code-block {
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .code-body {
+    padding: 1.25rem 1.25rem 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.75;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @media (min-width: 768px) {
+    .code-body {
+      padding: 1.5rem 1.5rem 1.75rem;
+      font-size: 0.9375rem;
+    }
+  }
+
+  /* Command prompt */
+  .pipe-command {
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+    white-space: pre;
+  }
+
+  .pipe-prompt {
+    color: var(--color-accent-primary);
+    font-weight: 600;
+  }
+
+  /* Pipeline output */
+  .pipe-output {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Pipeline step */
+  .pipe-step {
+    display: flex;
+    flex-wrap: wrap;
+    will-change: opacity, transform;
+    padding-left: 0.25rem;
+  }
+
+  .pipe-label-wrap {
+    display: inline-flex;
+    align-items: baseline;
+    white-space: pre;
+    flex-shrink: 0;
+  }
+
+  .pipe-name {
+    color: var(--color-accent-primary);
+    font-weight: 600;
+    min-width: 4.5rem;
+    display: inline-block;
+  }
+
+  .pipe-dashes {
+    color: var(--color-text-muted);
+    opacity: 0.4;
+    user-select: none;
+  }
+
+  .pipe-desc {
+    color: var(--color-text-muted);
+  }
+
+  .pipe-value {
+    color: var(--color-accent-secondary);
+    font-weight: 500;
+  }
+
+  /* Arrows between steps */
+  .pipe-arrow {
+    color: var(--color-accent-primary);
+    opacity: 0.5;
+    white-space: pre;
+    line-height: 1.25;
+    padding: 0.125rem 0;
+    user-select: none;
+  }
+
+  /* Status line */
+  .pipe-status {
+    color: var(--color-text-muted);
+    opacity: 0.6;
+    white-space: pre;
+  }
+
+  .pipe-check {
+    color: var(--color-accent-primary);
+    font-weight: 600;
+  }
+
+  /* Small screens */
+  @media (max-width: 479px) {
+    .code-body {
+      padding: 1rem 0.75rem 1.25rem;
+      font-size: 0.6875rem;
+      line-height: 1.85;
+    }
+
+    .pipe-name {
+      min-width: 3.75rem;
+    }
+  }
+
+  @media (min-width: 480px) and (max-width: 639px) {
+    .code-body {
+      font-size: 0.75rem;
+    }
+
+    .pipe-name {
+      min-width: 4rem;
     }
   }
 </style>
